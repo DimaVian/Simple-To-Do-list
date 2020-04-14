@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react'
 import './App.css';
+import Names from './components/Names';
+import Add from './components/Add';
+export default class App extends Component {
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+   state={
+     list:[{ToDo:'Homework'},{ToDo:'Clean the house'},{ToDo:'Training'}]
+   }
+
+   create=(n)=>{
+
+    this.setState({list:[{ToDo:n},...this.state.list]})
+
+   }
+
+   deletePost=(i)=>{
+    let tempPost=this.state.list.filter((element,index)=>(index!=i))
+    this.setState({list:[...tempPost]})
+   }
+
+
+
+  render() {
+    return (
+      <div className='App'>
+        
+        <Add add={this.create}/>
+        
+
+        {this.state.list.map((element,i)=>{
+          return <Names name={element.ToDo}  index={i} del={this.deletePost}/>
+        })}
+        
+      </div>
+    )
+  }
 }
 
-export default App;
